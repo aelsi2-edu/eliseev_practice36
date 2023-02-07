@@ -1,0 +1,42 @@
+#:kivy 1.0
+#:import PaintArea main.PaintArea
+#:import BrushPreview main.BrushPreview
+
+<BrushPreview>:
+	color: 1, 0, 0
+	thickness: 1
+	canvas:
+		Color:
+			rgb: self.color
+        Ellipse:
+            pos: self.center_x - self.thickness, self.center_y - self.thickness
+            size: self.thickness * 2, self.thickness * 2
+
+<PaintArea>:
+	color: 1, 0, 0
+	thickness: 1
+
+BoxLayout:
+	orientation: "vertical"
+	PaintArea:
+		id: painter
+	BoxLayout:
+		size_hint_y: 0.1
+		Button:
+			size_hint_x: 0.25
+			text: "Clear"
+			on_release: app.clear_click()
+		BrushPreview:
+			id: preview
+			size_hint_x: 0.25
+			
+		BoxLayout:
+			orientation: "vertical"
+			Slider:
+				min: 0
+				max: 1
+				on_value: app.on_hue_change(self.value)
+			Slider:
+				min: 1
+				max: 10
+				on_value: app.on_thickness_change(self.value)
